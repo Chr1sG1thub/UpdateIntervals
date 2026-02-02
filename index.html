@@ -54,11 +54,19 @@
       const url = `https://intervals.icu/api/v1/athlete/${ATHLETE_ID}/wellness/${dateStr}`;
 
       try {
-        const response = await fetch(url, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+
+        // In uploadWellness function, update fetch:
+const auth = btoa('API_KEY:' + API_KEY);  // username: "API_KEY", password: your_key
+
+const response = await fetch(url, {
+  method: 'PUT',
+  headers: {
+    'Authorization': `Basic ${auth}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+});
+
 
         if (!response.ok) {
           const errText = await response.text();
