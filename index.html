@@ -20,14 +20,26 @@
   <p>Enter values for today and click Submit. Replace placeholders with your athlete ID and API key.</p>
 
   <form id="wellnessForm">
-    <label for="hrvInput">HRV (rMSSD ms):</label>
-    <input type="number" id="hrvInput" step="0.1" min="0" placeholder="e.g., 15">
+    <label for="weightInput">Weight (kg):</label>
+    <input type="number" id="weightInput" step="0.1" min="60" placeholder="e.g., 70.2">
 
-    <label for="sleepInput">Sleep (hours):</label>
+    <label for="sleepInput">Sleep Duration (hours):</label>
     <input type="number" id="sleepInput" step="0.1" min="0" max="24" placeholder="e.g., 7.5">
 
-    <label for="rhrInput">Resting HR (bpm):</label>
-    <input type="number" id="rhrInput" min="30" max="200" placeholder="e.g., 55">
+    <label for="respirationInput">Breathing Rate:</label>
+    <input type="number" id="respiratiomInput" step="1" min="0" placeholder="e.g., 15">
+
+    <label for="spo2Input">Blood Oxygen (%):</label>
+    <input type="number" id="spo2Input" step="0.1" min="0" maz="100" placeholder="e.g., 55">
+
+    <label for="rhrInput">Resting Heart Rate (bpm):</label>
+    <input type="number" id="rhrInput" min="30" max="100" placeholder="e.g., 55">
+
+    <label for="hrvInput">Heart Rate Variability (ms):</label>
+    <input type="number" id="hrvInput" step="0.1" min="0" placeholder="e.g., 15">
+
+    <label for="vo2maxInput">Cardio Fitness Score:</label>
+    <input type="number" id="vo2maxInput" step="1" min="0" placeholder="e.g., 53">
 
     <button type="submit">Submit to Intervals.icu</button>
   </form>
@@ -39,16 +51,20 @@
     const ATHLETE_ID = 'i174212';  // e.g., '123456'
     const API_KEY = '3bjz27ydq97vjwmrc7f8u12oo';  // From Settings > Developer Settings
 
-    async function uploadWellness(hrv, sleep, rhr) {
+    async function uploadWellness(weight, sleep, respiration, spo2, rhr, hrv, vo2max) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const dateStr = today.toISOString().split('T')[0];
 
       const data = {
         id: dateStr,
-        hrv: parseFloat(hrv) || null,
+        weight: parseFloat(weight) || null,
         sleepSecs: parseFloat(sleep*3600) || null,
-        restingHR: parseInt(rhr) || null
+        respiration: parseInt(respiration) || null,
+        spO2: parseInt(spo2) || null,
+        restingHR: parseInt(rhr) || null,
+        hrv: parseFloat(hrv) || null,
+        vo2max: parseInt(vo2max) || null
       };
 
       const url = `https://intervals.icu/api/v1/athlete/${ATHLETE_ID}/wellness/${dateStr}`;
@@ -92,11 +108,15 @@ const response = await fetch(url, {
       }
 
       try {
-        const hrv = document.getElementById('hrvInput').value;
+        const weight = document.getElementById('weightInput').value;
         const sleep = document.getElementById('sleepInput').value;
+        const respiration = document.getElementById('respirationInput').value;
+        const spo2 = document.getElementById('spo2Input').value;
         const rhr = document.getElementById('rhrInput').value;
+        const hrv = document.getElementById('hrvInput').value;
+        const vo2max = document.getElementById('vo2maxInput').value;
 
-        const result = await uploadWellness(hrv, sleep, rhr);
+        const result = await uploadWellness(weight, sleep, respiration, spo2, rhr, hrv, vo2max);
         statusEl.textContent = 'Success! Data uploaded for ' + new Date().toDateString();
         statusEl.className = 'success';
       } catch (error) {
