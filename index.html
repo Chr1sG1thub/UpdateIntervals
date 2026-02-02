@@ -53,6 +53,8 @@
 
     async function uploadWellness(weight, sleep, respiration, spo2, rhr, hrv, vo2max) {
       const today = new Date();
+      today.setDate(today.getDate() + 1);     // Adds one day
+
       today.setHours(0, 0, 0, 0);
       const dateStr = today.toISOString().split('T')[0];
 
