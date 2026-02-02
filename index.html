@@ -21,7 +21,7 @@
 
   <form id="wellnessForm">
     <label for="hrvInput">HRV (rMSSD ms):</label>
-    <input type="number" id="hrvInput" step="0.1" min="0" placeholder="e.g., 85">
+    <input type="number" id="hrvInput" step="0.1" min="0" placeholder="e.g., 15">
 
     <label for="sleepInput">Sleep (hours):</label>
     <input type="number" id="sleepInput" step="0.1" min="0" max="24" placeholder="e.g., 7.5">
@@ -47,7 +47,7 @@
       const data = {
         id: dateStr,
         hrv: parseFloat(hrv) || null,
-        sleep: parseFloat(sleep) || null,
+        sleepSecs: parseFloat(sleep*3600) || null,
         restingHR: parseInt(rhr) || null
       };
 
