@@ -6,13 +6,13 @@
   <title>Intervals.icu Wellness Upload</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 0px; }
-    input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; font-size: 16px; }
+    input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; font-size: 12px; }
     button { background: #007bff; color: white; padding: 12px; border: none; width: 100%; cursor: pointer; }
     button:hover { background: #0056b3; }
     #status { margin-top: 20px; padding: 10px; border-radius: 4px; }
     .success { background: #d4edda; color: #155724; }
     .error { background: #f8d7da; color: #721c24; }
-    label { font-weight: bold; font-size: 16px; }
+    label { font-weight: bold; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -20,30 +20,30 @@
 
   <form id="wellnessForm">
     <label for="weightInput">Weight (kg):</label>
-    <input type="number" id="weightInput" step="0.1" min="60" placeholder="e.g., 70.2">
+    <input type="number" id="weightInput" step="0.1" min="60" >
 
     <label for="sleepInput">Sleep Duration (hours):</label>
-    <input type="number" id="sleepInput" step="0.1" min="0" max="24" placeholder="e.g., 7.5">
+    <input type="number" id="sleepInput" step="0.1" min="0" max="24" >
 
     <label for="readinessInput">Daily Readiness:</label>
-    <input type="number" id="readinessInput" step="1" min="0" placeholder="e.g., 65">
+    <input type="number" id="readinessInput" step="1" min="0" >
 
     <label for="respirationInput">Breathing Rate:</label>
-    <input type="number" id="respirationInput" step="1" min="0" placeholder="e.g., 15">
+    <input type="number" id="respirationInput" step="1" min="0" >
 
     <label for="spo2Input">Blood Oxygen (%):</label>
-    <input type="number" id="spo2Input" step="1" min="0" maz="100" placeholder="e.g., 55">
+    <input type="number" id="spo2Input" step="1" min="0" maz="100" >
 
     <label for="rhrInput">Resting Heart Rate (bpm):</label>
-    <input type="number" id="rhrInput" min="30" max="100" step="1" placeholder="e.g., 55">
+    <input type="number" id="rhrInput" min="30" max="100" step="1" >
 
     <label for="hrvInput">Heart Rate Variability (ms):</label>
-    <input type="number" id="hrvInput" step="1" min="0" placeholder="e.g., 15">
+    <input type="number" id="hrvInput" step="1" min="0" >
 
     <label for="vo2maxInput">Cardio Fitness Score:</label>
-    <input type="number" id="vo2maxInput" step="1" min="0" placeholder="e.g., 53">
+    <input type="number" id="vo2maxInput" step="1" min="0" >
 
-    <button type="submit">Submit to Intervals.icu</button>
+    <button type="button">Submit</button>
   </form>
 
   <div id="status"></div>
