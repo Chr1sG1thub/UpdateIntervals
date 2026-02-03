@@ -63,12 +63,12 @@
       const data = {
         id: dateStr,
         weight: parseFloat(weight) || null,
-        sleepSecs: parseFloat(sleep*3600) || null,
+        sleepSecs: parseFloat(sleep * 3600) || null,  //hours to seconds
         readiness: parseInt(readiness) || null,
         respiration: parseInt(respiration) || null,
         spO2: parseInt(spo2) || null,
         restingHR: parseInt(rhr) || null,
-        hrv: parseInt(hrv) || null,
+        hrv: parseInt(hrv * 3) || null,  //suggested multiplier
         vo2max: parseInt(vo2max) || null
       };
 
