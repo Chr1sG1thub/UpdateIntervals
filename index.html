@@ -22,8 +22,8 @@
     <label for="weightInput">Weight (kg):</label>
     <input type="number" id="weightInput" step="0.1" min="60" >
 
-    <label for="sleepInput">Sleep Duration (hours):</label>
-    <input type="number" id="sleepInput" step="0.01" min="0" max="24" >
+    <label for="sleepInput">Sleep Duration (e.g. 7h30m):</label>
+    <input type="text" id="sleepInput" >
 
     <label for="readinessInput">Daily Readiness:</label>
     <input type="number" id="readinessInput" step="1" min="0" >
@@ -53,6 +53,15 @@
     const ATHLETE_ID = 'i174212';  // e.g., '123456'
     const API_KEY = '3bjz27ydq97vjwmrc7f8u12oo';  // From Settings > Developer Settings
 
+function durationToSeconds(str) {
+  const hoursMatch = str.match(/(\d+)h/i);
+  const minutesMatch = str.match(/(\d+)m/i);
+  const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
+  const minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0;
+  return hours * 3600 + minutes * 60;
+}
+ 
+
     async function uploadWellness(weight, sleep, readiness, respiration, spo2, rhr, hrv, vo2max) {
       const today = new Date();
       today.setDate(today.getDate() + 1);     // Adds one day
@@ -60,10 +69,12 @@
       today.setHours(0, 0, 0, 0);
       const dateStr = today.toISOString().split('T')[0];
 
+      
+
       const data = {
         id: dateStr,
         weight: parseFloat(weight) || null,
-        sleepSecs: parseFloat(sleep * 3600) || null,  //hours to seconds
+        sleepSecs: parseInt(durationToSeconds(sleep) || null,  //hours to seconds
         readiness: parseInt(readiness) || null,
         respiration: parseInt(respiration) || null,
         spO2: parseInt(spo2) || null,
