@@ -74,7 +74,7 @@ function durationToSeconds(str) {
       const data = {
         id: dateStr,
         weight: parseFloat(weight) || null,
-        sleepSecs: parseInt(durationToSeconds(sleep) || null,  //hours to seconds
+        sleepSecs: parseInt(durationToSeconds(sleep)) || null,  //hours & mins to seconds
         readiness: parseInt(readiness) || null,
         respiration: parseInt(respiration) || null,
         spO2: parseInt(spo2) || null,
