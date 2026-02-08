@@ -29,7 +29,7 @@ const auth = btoa('API_KEY:' + apiKey);  // username: "API_KEY", password: your_
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
-        'Authorization': `Basic ${auth}`,  // Or Basic btoa('API_KEY:' + apiKey) [web:1][web:10]
+        'Authorization': `Basic ${auth}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
