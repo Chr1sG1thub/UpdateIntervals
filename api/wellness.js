@@ -1,10 +1,10 @@
 // api/wellness.js
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://chr1sg1thub.github.io');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'PUT');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  console.log (req.method);
+  //console.log (req.method);
 
   // Handle the Preflight (OPTIONS) request immediately
   if (req.method === 'OPTIONS') {
