@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 const auth = btoa('API_KEY:' + apiKey);  // username: "API_KEY", password: your_key
 
   const url = `https://intervals.icu/api/v1/athlete/0/wellness/${date}`;
-  const payload = { id: date, ...wellnessData };
+  const payload = {...wellnessData };
 
   try {
     const response = await fetch(url, {
