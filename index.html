@@ -64,12 +64,10 @@ function durationToSeconds(str) {
 
     async function uploadWellness(weight, sleep, readiness, respiration, spo2, rhr, hrv, vo2max) {
       const today = new Date();
-      today.setDate(today.getDate() + 1);     // Adds one day
+ //     today.setDate(today.getDate() + 1);     // Adds one day
 
-      today.setHours(0, 0, 0, 0);
+ //     today.setHours(0, 0, 0, 0);
       const dateStr = today.toISOString().split('T')[0];
-
-      
 
       const data = {
         date: dateStr,
