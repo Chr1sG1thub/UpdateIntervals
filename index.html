@@ -50,8 +50,8 @@
 
   <script>
     // Replace with your actual values from intervals.icu
-    const ATHLETE_ID = 'i174212';  // e.g., '123456'
-    const API_KEY = '3bjz27ydq97vjwmrc7f8u12oo';  // From Settings > Developer Settings
+ //   const ATHLETE_ID = 'i174212';  // e.g., '123456'
+ //   const API_KEY = '3bjz27ydq97vjwmrc7f8u12oo';  // From Settings > Developer Settings
 
 function durationToSeconds(str) {
   const hoursMatch = str.match(/(\d+)h/i);
@@ -83,17 +83,17 @@ function durationToSeconds(str) {
         vo2max: parseInt(vo2max) || null
       };
 
-      const url = `https://intervals.icu/api/v1/athlete/${ATHLETE_ID}/wellness/${dateStr}`;
+      const url = `https://update-intervals.vercel.app/api/wellness`;
 
       try {
 
         // In uploadWellness function, update fetch:
-const auth = btoa('API_KEY:' + API_KEY);  // username: "API_KEY", password: your_key
+//const auth = btoa('API_KEY:' + API_KEY);  // username: "API_KEY", password: your_key
 
 const response = await fetch(url, {
   method: 'PUT',
   headers: {
-    'Authorization': `Basic ${auth}`,
+//    'Authorization': `Basic ${auth}`,
     'Content-Type': 'application/json'
   },
   body: JSON.stringify(data)
