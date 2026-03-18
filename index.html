@@ -94,8 +94,12 @@ const dateStr = `${year}-${month}-${day}`;
 
   let minutesAsleep = null;
   if (data?.sleep[0]?.minutesAsleep !== undefined) minutesAsleep = data.sleep[0].minutesAsleep;
+
+  const hoursAsleep = Math.floor(minutesAsleep/60);
+  const minsAsleep = minutesAsleep%60;
+  const timeAsleep = `${hoursAsleep}h${minsAsleep.toString().padStart(2, '0')}m`;
   
-   document.getElementById('sleepInput').value = minutesAsleep;
+   document.getElementById('sleepInput').value = timeAsleep;
   
   res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/br/date/today.json&token=${encodeURIComponent(token)}`);
   data = await res.json();
@@ -109,7 +113,7 @@ const dateStr = `${year}-${month}-${day}`;
   data = await res.json();
 
   let spo2 = null;
-  if (data?.value?.avg !== undefined) spo2 = data.value.avg;
+  if (data?.value?.avg !== undefined) spo2 = Math.round(data.value.avg);
   
    document.getElementById('spo2Input').value = spo2;
   
@@ -125,7 +129,7 @@ const dateStr = `${year}-${month}-${day}`;
   data = await res.json();
 
   let hrv = null;
-  if ( data?.hrv[0]?.value?.dailyRmssd !== undefined) hrv =  data.hrv[0].value.dailyRmssd;
+  if ( data?.hrv[0]?.value?.dailyRmssd !== undefined) hrv =  Math.round(data.hrv[0].value.dailyRmssd);
   
    document.getElementById('hrvInput').value = hrv;
   
