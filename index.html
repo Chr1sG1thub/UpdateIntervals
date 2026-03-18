@@ -18,6 +18,8 @@
 <body>
   <h2>Upload Wellness to Intervals</h1>
 
+ <button onclick="connectFitbit()">Connect Fitbit</button>
+  
   <form id="wellnessForm">
     <label for="weightInput">Weight (kg):</label>
     <input type="number" id="weightInput" step="0.1" min="60" >
@@ -50,13 +52,104 @@
 
   <script>
 
-//----------------------------------------------------------------------------
-    function loadData() {
+  if (location.search.includes('fitbit=authorized')) loadData();
+
+//--------------------------------------------------------------------------------
+  function connectFitbit() {
+  const authUrl = `https://www.fitbit.com/oauth2/authorize?` +
+    `client_id=23TZ3L&` +  // Your Client ID
+    `redirect_uri=https://chr1sg1thub.github.io/MyFitbit/callback.html&` +
+    `response_type=token&` +
+    `scope=activity%20heartrate%20sleep%20respiratory_rate%20oxygen_saturation%20cardio_fitness%20weight`;  // Add scopes as needed
+  
+  location.href = authUrl;
+}
+
+//--------------------------------------------------------------------------------
+async function loadData() {
+  const token = localStorage.getItem('fitbit_token');
+  document.getElementById('data').innerHTML = 'Loading...';
+
+  const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const dateStr = `${year}-${month}-${day}`;
+
+  document.getElementById('data').innerHTML = `
+    <h2>Today</h2>
+  `;
+
+  let res, data;
+
+//  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/body/log/weight/date/${dateStr}.json&token=${encodeURIComponent(token)}`);
+//  data = await res.json();
+
+//  let weight = null;
+//  if (data?.weight[0]?.weight !== undefined) weight = data.weight[0].weight;
+  
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1.2/user/-/sleep/date/${dateStr}.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+
+  let minutesAsleep = null;
+  if (data?.sleep[0]?.minutesAsleep !== undefined) minutesAsleep = data.sleep[0].minutesAsleep;
+  
+   document.getElementById('sleepInput').value = minutesAsleep;
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/br/date/today.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+
+  let breathingRate = null;
+  if (data?.br[0]?.value?.breathingRate !== undefined) breathingRate = data.br[0].value.breathingRate;
+  
+   document.getElementById('respirationInput').value = breathingRate;
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/spo2/date/today.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+
+  let spo2 = null;
+  if (data?.value?.avg !== undefined) spo2 = data.value.avg;
+  
+   document.getElementById('spo2Input').value = spo2;
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/activities/heart/date/today/1d.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+  
+  let restingHeartRate = null;
+  if ( data['activities-heart'][0]?.value?.restingHeartRate !== undefined) restingHeartRate = data['activities-heart'][0].value.restingHeartRate;
+  
+   document.getElementById('rhrInput').value = restingHeartRate;
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/hrv/date/today.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+
+  let hrv = null;
+  if ( data?.hrv[0]?.value?.dailyRmssd !== undefined) hrv =  data.hrv[0].value.dailyRmssd;
+  
+   document.getElementById('hrvInput').value = hrv;
+  
+  res = await fetch(`https://my-fitbit.vercel.app/api/fitbit?endpoint=/1/user/-/cardioscore/date/today.json&token=${encodeURIComponent(token)}`);
+  data = await res.json();
+
+  let vo2MaxStr = null;
+  if ( data?.cardioScore[0]?.value?.vo2Max !== undefined) vo2MaxStr =  data.cardioScore[0].value.vo2Max;
+
+  const parts = vo2MaxStr.split('-');
+const vo2MaxMin = parseInt(parts[0], 10);
+const vo2MaxMax = parseInt(parts[1], 10);
+  const vo2Max = (vo2MaxMax + vo2MaxMin)/2;
+
+   document.getElementById('vo2maxInput').value = vo2Max;
+}
+
+    //----------------------------------------------------------------------------
+    function loadWeight() {
       const data = localStorage.getItem('numbers');
       return data ? JSON.parse(data) : {};
     }
 //----------------------------------------------------------------------------
-    const weightData = loadData();
+    const weightData = loadWeight();
 
     const mostRecentValue = Object.entries(weightData)
   .reduce((best, cur) => new Date(cur[0]) > new Date(best[0]) ? cur : best)[1];
