@@ -49,15 +49,13 @@
   <div id="status"></div>
 
   <script>
-    // Replace with your actual values from intervals.icu
- //   const ATHLETE_ID = 'i174212';  // e.g., '123456'
- //   const API_KEY = '3bjz27ydq97vjwmrc7f8u12oo';  // From Settings > Developer Settings
 
-        function loadData() {
+//----------------------------------------------------------------------------
+    function loadData() {
       const data = localStorage.getItem('numbers');
       return data ? JSON.parse(data) : {};
     }
-
+//----------------------------------------------------------------------------
     const weightData = loadData();
 
     const mostRecentValue = Object.entries(weightData)
@@ -65,6 +63,7 @@
 
     document.getElementById('weightInput').value = mostRecentValue;
 
+//----------------------------------------------------------------------------
 function durationToSeconds(str) {
   const hoursMatch = str.match(/(\d+)h/i);
   const minutesMatch = str.match(/(\d+)m/i);
@@ -72,8 +71,10 @@ function durationToSeconds(str) {
   const minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0;
   return hours * 3600 + minutes * 60;
 }
+//----------------------------------------------------------------------------
  
 
+//----------------------------------------------------------------------------
     async function uploadWellness(weight, sleep, readiness, respiration, spo2, rhr, hrv, vo2max) {
       const today = new Date();
  //     today.setDate(today.getDate() + 1);     // Adds one day
@@ -96,9 +97,6 @@ function durationToSeconds(str) {
       const url = `https://update-intervals.vercel.app/api/wellness`;
 
       try {
-
-        // In uploadWellness function, update fetch:
-//const auth = btoa('API_KEY:' + API_KEY);  // username: "API_KEY", password: your_key
 
 const response = await fetch(url, {
   method: 'PUT',
@@ -127,12 +125,6 @@ const response = await fetch(url, {
       statusEl.textContent = 'Uploading...';
       statusEl.className = '';
 
- //     if (ATHLETE_ID === 'your_athlete_id_here' || API_KEY === 'your_api_key_here') {
- //       statusEl.textContent = 'Please set your ATHLETE_ID and API_KEY in the script.';
-  //      statusEl.className = 'error';
- //       return;
- //     }
-
       try {
         const weight = document.getElementById('weightInput').value;
         const sleep = document.getElementById('sleepInput').value;
@@ -151,6 +143,8 @@ const response = await fetch(url, {
         statusEl.className = 'error';
       }
     });
+//----------------------------------------------------------------------------
+    
   </script>
 </body>
 </html>
